@@ -1,24 +1,15 @@
-# README
+# Rodando o projeto
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+### 1. Docker installation 
+```sh
+curl -fsSL https://get.docker.com -o get-docker.sh
+sudo sh get-docker.sh
+sudo usermod -aG docker ${USER}
+```
 
-Things you may want to cover:
+### 2. Configure database
 
-* Ruby version
+> PostgreSql [required]
 
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+* Now, we have to configure our PostgreSQL database using Docker Compose.
+* Access your docker-compose.yaml and choose your password

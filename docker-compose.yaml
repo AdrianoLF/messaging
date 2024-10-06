@@ -1,0 +1,49 @@
+version: '3'
+
+services:
+  rails:
+    build:
+      context: .
+      dockerfile: ./docker/Dockerfile
+    volumes:
+      - ./:/app:delegated
+      - packs:/app/public/packs
+      - cache:/app/tmp/cache
+      - bundle:/usr/local/bundle
+    depends_on:
+      - postgres
+      - redis
+    ports:
+      - "3000:3000"
+    env_file: .env
+    environment:
+      - RAILS_ENV=development
+    entrypoint: ./docker/entrypoints/rails.sh
+    command: ["bundle", "exec", "rails", "s", "-p", "3000", "-b", "0.0.0.0"]
+
+  postgres:
+    image: postgres:9.6
+    restart: always
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=messaging
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=pass123
+
+  redis:
+    image: redis:alpine
+    restart: always
+    volumes:
+      - redis:/data
+    ports:
+      - "6379:6379"
+
+volumes:
+  postgres:
+  redis:
+  packs:
+  cache:
+  bundle:
